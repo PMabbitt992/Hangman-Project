@@ -1,5 +1,9 @@
 "use strict"
 
+var LOG = console.log
+
+
+
 window.onload = function () {
 
     var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
@@ -16,6 +20,9 @@ window.onload = function () {
     var lives; // Lives
     var counter; // Count correct guesses
     var space; // Number of spaces in word '-'
+    var list = document.createElement('ul');
+    var correct = document.createElement('ul');
+    var letters = document.createElement('ul');
 
     // Get elements
     var showLives = document.getElementById("mylives");
@@ -28,7 +35,6 @@ window.onload = function () {
     // create alphabet ul
     var buttons = function () {
         var myButtons = document.getElementById('buttons');
-        var letters = document.createElement('ul');
 
         for (var i = 0; i < alphabet.length; i++) {
             letters.id = 'alphabet';
@@ -55,8 +61,8 @@ window.onload = function () {
 
     // Create guesses ul
     var result = function () {
-        wordHolder = document.getElementById('hold');
-        correct = document.createElement('ul');
+        var wordHolder = document.getElementById('hold');
+
 
         for (var i = 0; i < word.length; i++) {
             correct.setAttribute('id', 'my-word');
@@ -98,8 +104,8 @@ window.onload = function () {
     // Hangman
     var canvas = function () {
 
-        myStickman = document.getElementById("stickman");
-        context = myStickman.getContext('2d');
+        var myStickman = document.getElementById("stickman");
+        var context = myStickman.getContext('2d');
         context.beginPath();
         context.strokeStyle = "#fff";
         context.lineWidth = 2;
@@ -107,7 +113,7 @@ window.onload = function () {
 
     var head = function () {
         myStickman = document.getElementById("stickman");
-        context = myStickman.getContext('2d');
+        var context = myStickman.getContext('2d');
         context.beginPath();
         context.arc(60, 25, 10, 0, Math.PI * 2, true);
         context.stroke();
@@ -213,7 +219,7 @@ window.onload = function () {
 
     hint.onclick = function () {
 
-        hints = [
+        var hints = [
             ["Based in Mersyside", "Based in Mersyside", "First Welsh team to reach the Premier Leauge", "Owned by A russian Billionaire", "Once managed by Phil Brown", "2013 FA Cup runners up", "Gazza's first club"],
             ["Science-Fiction horror film", "1971 American action film", "Historical drama", "Animated Fish", "Giant great white shark"],
             ["Northern city in the UK", "Home of AC and Inter", "Spanish capital", "Netherlands capital", "Czech Republic capital"]
@@ -230,6 +236,7 @@ window.onload = function () {
         correct.parentNode.removeChild(correct);
         letters.parentNode.removeChild(letters);
         showClue.innerHTML = "";
+        var context = myStickman.getContext('2d');
         context.clearRect(0, 0, 400, 400);
         play();
     }
