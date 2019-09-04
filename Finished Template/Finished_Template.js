@@ -11,9 +11,9 @@ window.onload = function () {
         't', 'u', 'v', 'w', 'x', 'y', 'z'
     ];
 
+    //var getHint; //Word getHint
     var categories; // Array of topics
     var chosenCategory; // Selected category
-    var getHint; // Word getHint
     var word; // Selected word
     var guess; // Guess
     var guesses = []; // Stored guesses
@@ -25,16 +25,15 @@ window.onload = function () {
     var letters = document.createElement('ul');
 
     // Get elements
+    //var showCategory = document.getElementById("scatagory");
+    //var getHint = document.getElementById("hint");
     var showLives = document.getElementById("mylives");
-    var showCategory = document.getElementById("scatagory");
-    var getHint = document.getElementById("hint");
     var showClue = document.getElementById("clue");
-
+    var myButtons = document.getElementById('buttons');
 
 
     // create alphabet ul
     var buttons = function () {
-        var myButtons = document.getElementById('buttons');
 
         for (var i = 0; i < alphabet.length; i++) {
             letters.id = 'alphabet';
@@ -103,7 +102,6 @@ window.onload = function () {
 
     // Hangman
     var canvas = function () {
-
         var myStickman = document.getElementById("stickman");
         var context = myStickman.getContext('2d');
         context.beginPath();
@@ -112,7 +110,7 @@ window.onload = function () {
     };
 
     var head = function () {
-        myStickman = document.getElementById("stickman");
+        var myStickman = document.getElementById("stickman");
         var context = myStickman.getContext('2d');
         context.beginPath();
         context.arc(60, 25, 10, 0, Math.PI * 2, true);
@@ -120,7 +118,8 @@ window.onload = function () {
     }
 
     var draw = function ($pathFromx, $pathFromy, $pathTox, $pathToy) {
-
+        var myStickman = document.getElementById("stickman");
+        var context = myStickman.getContext('2d');
         context.moveTo($pathFromx, $pathFromy);
         context.lineTo($pathTox, $pathToy);
         context.stroke();
@@ -167,13 +166,15 @@ window.onload = function () {
 
     // OnClick Function
     var check = function () {
+        //letters.onclick = function () is clickable, but all letters count as one
         list.onclick = function () {
             var guess = (this.innerHTML);
+            LOG(this);
             this.setAttribute("class", "active");
             this.onclick = null;
             for (var i = 0; i < word.length; i++) {
                 if (word[i] === guess) {
-                    guesses[i].innerHTML = guess;
+                    guess[i].innerHTML = guess;
                     counter += 1;
                 }
             }
@@ -236,6 +237,7 @@ window.onload = function () {
         correct.parentNode.removeChild(correct);
         letters.parentNode.removeChild(letters);
         showClue.innerHTML = "";
+        var myStickman = document.getElementById("stickman");
         var context = myStickman.getContext('2d');
         context.clearRect(0, 0, 400, 400);
         play();
