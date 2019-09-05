@@ -11,6 +11,15 @@ window.onload = function () {
         't', 'u', 'v', 'w', 'x', 'y', 'z'
     ];
 
+
+    // function checkLetter(letter) {
+    //   return  letter.indexOf(PATTERN) === -1;
+    // }
+
+    // function myFunction() {
+    //   document.getElementById("demo").innerHTML = alphabet.filter(checkLetter);
+    // }
+
     //var getHint; //Word getHint
     var categories; // Array of topics
     var chosenCategory; // Selected category
@@ -30,23 +39,24 @@ window.onload = function () {
     var showLives = document.getElementById("mylives");
     var showClue = document.getElementById("clue");
     var myButtons = document.getElementById('buttons');
+    var myStickman = document.getElementById("stickman");
+    var context = myStickman.getContext('2d');
 
 
     // create alphabet ul
     function buttons() {
 
-        for (var i = 0; i < alphabet.length; i++) {
+        for (let i = 0; i < alphabet.length; i++) {
             var list = document.createElement('li')
             letters.id = 'alphabet';
             list.id = 'letter';
             list.innerHTML = alphabet[i];
-            check();
+            check(event);
             myButtons.appendChild(letters);
             letters.appendChild(list);
         }
 
     }
-
 
     // Select Category
     function selectCat() {
@@ -64,7 +74,7 @@ window.onload = function () {
         var wordHolder = document.getElementById('hold');
 
 
-        for (var i = 0; i < word.length; i++) {
+        for (let i = 0; i < word.length; i++) {
             correct.setAttribute('id', 'my-word');
             guess = document.createElement('li');
             guess.setAttribute('class', 'guess');
@@ -89,7 +99,7 @@ window.onload = function () {
         if (lives < 1) {
             showLives.innerHTML = "Game Over";
         }
-        for (var i = 0; i < guesses.length; i++) {
+        for (let i = 0; i < guesses.length; i++) {
             if (counter + space === guesses.length) {
                 showLives.innerHTML = "You Win!";
             }
@@ -105,24 +115,18 @@ window.onload = function () {
 
     // Hangman
     function canvas() {
-        var myStickman = document.getElementById("stickman");
-        var context = myStickman.getContext('2d');
         context.beginPath();
         context.strokeStyle = "#fff";
         context.lineWidth = 2;
     };
 
     function head() {
-        var myStickman = document.getElementById("stickman");
-        var context = myStickman.getContext('2d');
         context.beginPath();
         context.arc(60, 25, 10, 0, Math.PI * 2, true);
         context.stroke();
     }
 
     function draw($pathFromx, $pathFromy, $pathTox, $pathToy) {
-        var myStickman = document.getElementById("stickman");
-        var context = myStickman.getContext('2d');
         context.moveTo($pathFromx, $pathFromy);
         context.lineTo($pathTox, $pathToy);
         context.stroke();
@@ -167,24 +171,24 @@ window.onload = function () {
     var drawArray = [rightLeg, leftLeg, rightArm, leftArm, torso, head, frame4, frame3, frame2, frame1];
 
     // OnClick Function
+    function check(event) {
+        letters.onclick = function (event) {
+            var key = event.target;
+            LOG(key);
+            var keyText = event.target.textContent;
+            LOG(keyText);
 
-
-
-    function check() {
-        LOG(document.getElementById('alphabet'))
-        LOG(letters);
-        letters.onclick = function () {
-            var guess = (this.innerHTML);
-            LOG(this);
-            this.setAttribute("class", "active");
-            this.onclick = null;
-            for (var i = 0; i < word.length; i++) {
-                if (word[i] === guess) {
-                    guess[i].innerHTML = guess;
+            const guessed = (keyText);
+            LOG(guess);
+            key.setAttribute("class", "active");
+            key = null;
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === guessed) {
+                    guesses[i].innerHTML = guessed;
                     counter += 1;
                 }
             }
-            var j = (word.indexOf(guess));
+            let j = (word.indexOf(guesses));
             if (j === -1) {
                 lives -= 1;
                 comments();
@@ -194,6 +198,8 @@ window.onload = function () {
             }
         }
     }
+
+
 
 
 
@@ -224,7 +230,6 @@ window.onload = function () {
     }
 
     play();
-
     // Hint
 
     hint.onclick = function () {
@@ -243,13 +248,12 @@ window.onload = function () {
     // Reset
 
     document.getElementById('reset').onclick = function () {
-
         correct.parentNode.removeChild(correct);
         letters.parentNode.removeChild(letters);
+
         showClue.innerHTML = "";
-        var myStickman = document.getElementById("stickman");
-        var context = myStickman.getContext('2d');
         context.clearRect(0, 0, 400, 400);
         play();
     }
+
 }
