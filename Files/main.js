@@ -1,12 +1,10 @@
-"use strict"
-
-var LOG = console.log
+const LOG = console.log;
 
 
 
-window.onload = function () {
+window.onload = () => {
 
-    var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+    const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z'
     ];
@@ -21,33 +19,33 @@ window.onload = function () {
     // }
 
     //var getHint; //Word getHint
-    var categories; // Array of topics
-    var chosenCategory; // Selected category
-    var word; // Selected word
-    var guess; // Guess
-    var guesses = []; // Stored guesses
-    var lives; // Lives
-    var counter; // Count correct guesses
-    var space; // Number of spaces in word '-'
-    var correct = document.createElement('ul');
-    var letters = document.createElement('ul');
+    let categories; // Array of topics
+    let chosenCategory; // Selected category
+    let word; // Selected word
+    let guess; // Guess
+    let guesses = []; // Stored guesses
+    let lives; // Lives
+    let counter; // Count correct guesses
+    let space; // Number of spaces in word '-'
+    const correct = document.createElement('ul');
+    const letters = document.createElement('ul');
 
 
     // Get elements
     //var showCategory = document.getElementById("scatagory");
     //var getHint = document.getElementById("hint");
-    var showLives = document.getElementById("mylives");
-    var showClue = document.getElementById("clue");
-    var myButtons = document.getElementById('buttons');
-    var myStickman = document.getElementById("stickman");
-    var context = myStickman.getContext('2d');
+    const showLives = document.getElementById("mylives");
+    const showClue = document.getElementById("clue");
+    const myButtons = document.getElementById('buttons');
+    const myStickman = document.getElementById("stickman");
+    const context = myStickman.getContext('2d');
 
 
     // create alphabet ul
     function buttons() {
 
         for (let i = 0; i < alphabet.length; i++) {
-            var list = document.createElement('li')
+            const list = document.createElement('button');
             letters.id = 'alphabet';
             list.id = 'letter';
             list.innerHTML = alphabet[i];
@@ -71,7 +69,7 @@ window.onload = function () {
 
     // Create guesses ul
     function result() {
-        var wordHolder = document.getElementById('hold');
+        const wordHolder = document.getElementById('hold');
 
 
         for (let i = 0; i < word.length; i++) {
@@ -95,20 +93,20 @@ window.onload = function () {
 
     // Show lives
     function comments() {
-        showLives.innerHTML = "You have " + lives + " lives";
+        showLives.textContent = `You have ${lives} lives`;
         if (lives < 1) {
-            showLives.innerHTML = "Game Over";
+            showLives.textContent = "Game Over";
         }
         for (let i = 0; i < guesses.length; i++) {
             if (counter + space === guesses.length) {
-                showLives.innerHTML = "You Win!";
+                showLives.textContent = "You Win!";
             }
         }
     }
 
     // Animate man
     function animate() {
-        var drawMe = lives;
+        const drawMe = lives;
         drawArray[drawMe]();
     }
 
@@ -172,23 +170,20 @@ window.onload = function () {
 
     // OnClick Function
     function check(event) {
-        letters.onclick = function (event) {
-            var key = event.target;
-            LOG(key);
-            var keyText = event.target.textContent;
-            LOG(keyText);
-
+        letters.onclick = event => {
+            const key = event.target;
+            const keyText = event.target.textContent;
             const guessed = (keyText);
-            LOG(guess);
+
             key.setAttribute("class", "active");
-            key = null;
+            key.disabled = true;
             for (let i = 0; i < word.length; i++) {
                 if (word[i] === guessed) {
                     guesses[i].innerHTML = guessed;
                     counter += 1;
                 }
             }
-            let j = (word.indexOf(guesses));
+            let j = (word.indexOf(guessed));
             if (j === -1) {
                 lives -= 1;
                 comments();
@@ -208,9 +203,9 @@ window.onload = function () {
     // Play
     function play() {
         categories = [
-            ["dog", "cat", "mantis-shrimp", "fly", "fish", "octopus", "bird"],
-            ["alien", "megamind", "the-princess-bride", "finding-nemo", "jaws"],
-            ["albequerque", "phoenix", "tokyo", "paris", "london"]
+            ["dog", "sphynx", "mantis-shrimp", "beetle", "clownfish", "octopus", "turkey"],
+            ["alien", "megamind", "the-princess-bride", "finding-nemo", "jaws", "detective-pikachu", "jurassic-park"],
+            ["albequerque", "phoenix", "tokyo", "paris", "london", "denver", "assur", ]
         ];
 
         chosenCategory = categories[Math.floor(Math.random() * categories.length)];
@@ -232,28 +227,23 @@ window.onload = function () {
     play();
     // Hint
 
-    hint.onclick = function () {
+    hint.onclick = () => {
 
-        var hints = [
-            ["Most popular household pet", "Always lands on its feet", "Can reach the speed of sound", "Small winged bug", "Swims in the ocean", "Has a large amount of arms", "Flies across the sky"],
-            ["Science-Fiction horror film", "A subversive masterpiece", "As you wish", "Animated Fish", "Giant great white shark"],
-            ["A song has been made about it", "Capitol of Arizona", "Population of 9 million", "City of Love", "Home of Big Ben"]
+        const hints = [
+            ["Most popular household pet", "Popular Egyptian statue", "Can strike with 1,500 Newtons of force", "Small winged bug", "Has white and orange stripes", "Has a large amount of arms", "Was almost the American national bird"],
+            ["Science-Fiction horror film", "A subversive masterpiece", "As you wiiiiiish!", "Animated Fish", "Giant great white shark", "Investigative mouse", "Dinosaurs"],
+            ["A weird song has been made about this town", "Capitol city of Arizona", "Island city with population of 9 million", "City of Love", "Home of Big Ben", "Large city in Colorado", "The capitol of Assyria"]
         ];
 
-        var categoryIndex = categories.indexOf(chosenCategory);
-        var hintIndex = chosenCategory.indexOf(word);
-        showClue.innerHTML = "Clue: - " + hints[categoryIndex][hintIndex];
+        const categoryIndex = categories.indexOf(chosenCategory);
+        const hintIndex = chosenCategory.indexOf(word);
+        showClue.innerHTML = `Clue: - ${hints[categoryIndex][hintIndex]}`;
     };
 
     // Reset
 
-    document.getElementById('reset').onclick = function () {
-        correct.parentNode.removeChild(correct);
-        letters.parentNode.removeChild(letters);
-
-        showClue.innerHTML = "";
-        context.clearRect(0, 0, 400, 400);
-        play();
+    document.getElementById('reset').onclick = () => {
+        location.reload();
     }
 
 }
