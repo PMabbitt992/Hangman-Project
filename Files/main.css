@@ -48,7 +48,7 @@ p {
 }
 
 #alphabet {
-    margin: 15px auto;
+    margin: auto;
     padding: 0;
     max-width: 900px;
 }
@@ -59,12 +59,11 @@ p {
     clear: both;
 }
 
-#alphabet li {
-    float: left;
-    margin: 0 10px 10px 0;
+#alphabet button {
+    margin: 0 18px 18px 0;
     list-style: none;
-    width: 35px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     padding-top: 10px;
     background: #fff;
     color: #3e706e;
@@ -74,9 +73,10 @@ p {
     border-radius: 5px;
     -khtml-border-radius: 5px;
     border: solid 1px #fff;
+
 }
 
-#alphabet li:hover {
+#alphabet button:hover {
     background: #3e706e;
     border: solid 1px #fff;
     color: #fff;
